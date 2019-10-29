@@ -1,11 +1,15 @@
 package com.revature.watercanappreservems.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.revature.watercanappreservems.dto.MessageConstant;
 import com.revature.watercanappreservems.exception.ServiceException;
 import com.revature.watercanappreservems.dto.ReserveDto;
+import com.revature.watercanappreservems.dto.StockDto;
 import com.revature.watercanappreservems.model.ReserveDetails;
 import com.revature.watercanappreservems.repository.ReserveCanRepository;
 
@@ -14,14 +18,20 @@ public class ReserveCanService {
 
 	@Autowired
 	private ReserveCanRepository reserveCanRepository;
+	
+	@Autowired
+	private StockService stockService;
+
 
 	public ReserveDetails reserveStock(ReserveDto reserve) throws ServiceException {
 		ReserveDetails cans = null;
 		ReserveDetails result = new ReserveDetails();
 		result.setReservedCans(reserve.getReservedCans());
 		result.setUserId(reserve.getUserId());
-		int cansAvail = 100;
-		if (reserve.getReservedCans() <= cansAvail) {
+        List<StockDto> stockList=stockService.findAllStocks();
+        StockDto stockAvailability = stockList.get(0);
+        int stockCans=stockAvailability.getAvailableCans();
+        if (reserve.getReservedCans() <= stockCans) {
 			result.setReservedCans(reserve.getReservedCans());
 			result.setUserId(reserve.getUserId());
 			result.setUserName(reserve.getUserName());
@@ -71,6 +81,12 @@ public class ReserveCanService {
 					orderCan.setStatus("Ordered");
 					orderCan.setDate(LocalDateTime.now());
 					orderCanValue = reserveCanRepository.save(orderCan);
+					List<StockDto> stockList=stockService.findAllStocks();
+			        StockDto stockAvailability = stockList.get(0);
+			        int stockCans=stockAvailability.getAvailableCans();
+			        ReserveDetails reserveCans = new ReserveDetails();
+					reserveCans.setUserId(reserve.getReserveId());
+					reserveCanRepository.delete(reserveCans);
 				} else {
 					throw new ServiceException(MessageConstant.INVALID_CANS);
 				}
