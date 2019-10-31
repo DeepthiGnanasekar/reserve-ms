@@ -41,5 +41,11 @@ public class StockService {
        ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl+"/updateReservedCans",reserveDto, String.class);
        System.out.println(postForEntity.getBody());
     }
+    
+    void  subReservedOrderedStocks(final ReserveDto reserveDto){        
+        System.out.println(reserveDto);
+       ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl+"/updateReservedCans",reserveDto, String.class);
+       System.out.println(postForEntity.getBody());
+    }
 }
 

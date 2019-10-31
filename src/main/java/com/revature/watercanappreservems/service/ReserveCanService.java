@@ -87,7 +87,7 @@ public class ReserveCanService {
 					List<StockDto> stockList=stockService.findAllStocks();
 			        StockDto stockAvailability = stockList.get(0);
 			        int stockCans=stockAvailability.getAvailableCans();
-			        stockService.addReservedStocks(reserve);
+			        stockService.addReservedOrderedStocks(reserve);
 				} else if (reserve.getReservedOrderCans() > result.getReservedCans()){
 					ReserveDetails orderCan = new ReserveDetails();
 					orderCan.setReservedOrderCans(reserve.getReservedOrderCans());
@@ -103,7 +103,7 @@ public class ReserveCanService {
 					List<StockDto> stockList=stockService.findAllStocks();
 			        StockDto stockAvailability = stockList.get(0);
 			        int stockCans=stockAvailability.getAvailableCans();
-			        stockService.addReservedStocks(reserve);
+			        stockService.subReservedOrderedStocks(reserve);
 				}
 				else {
 					throw new ServiceException(MessageConstant.INVALID_CANS);
