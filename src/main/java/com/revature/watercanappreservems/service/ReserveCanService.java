@@ -115,5 +115,14 @@ public class ReserveCanService {
 		}
 		return orderCanValue;
 	}
-
+	
+	public List<ReserveDetails> viewReserveOrders() throws ServiceException {
+        List<ReserveDetails> list = null;
+        list = reserveCanRepository.findAll();
+       stockService.viewReserveDetails(list);
+        if (list == null) {
+            throw new ServiceException(MessageConstant.INVALID_RESERVEORDERS);
+        }
+        return list;
+	}
 }

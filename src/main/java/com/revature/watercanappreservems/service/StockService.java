@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.revature.watercanappreservems.dto.ReserveDto;
 import com.revature.watercanappreservems.dto.StockDto;
+import com.revature.watercanappreservems.model.ReserveDetails;
 
 @Service
 public class StockService {
@@ -47,6 +48,13 @@ public class StockService {
 	void subReservedOrderedStocks(final ReserveDto reserveDto) {
 		System.out.println(reserveDto);
 		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/updateReservedCans", reserveDto,
+				String.class);
+		System.out.println(postForEntity.getBody());
+	}
+	
+	void viewReserveDetails(final List<ReserveDetails> list) {
+		System.out.println(list);
+		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/viewReserve", list,
 				String.class);
 		System.out.println(postForEntity.getBody());
 	}
