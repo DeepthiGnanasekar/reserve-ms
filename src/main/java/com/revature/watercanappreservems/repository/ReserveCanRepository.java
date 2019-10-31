@@ -15,4 +15,5 @@ public interface ReserveCanRepository extends JpaRepository<ReserveDetails, Stri
 
 	@Query(" from ReserveDetails where id = :id")
 	ReserveDetails findByReserveOrderId(@Param("id") int id);
+
 }
