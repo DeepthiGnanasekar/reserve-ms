@@ -51,11 +51,4 @@ public class StockService {
 				String.class);
 		System.out.println(postForEntity.getBody());
 	}
-	
-	void viewReserveDetails(final List<ReserveDetails> list) {
-		System.out.println(list);
-		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/viewReserve", list,
-				String.class);
-		System.out.println(postForEntity.getBody());
-	}
 }

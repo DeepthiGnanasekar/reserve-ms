@@ -90,13 +90,21 @@ public class ReserveCanController {
 	
 	@GetMapping("viewReserveOrders")
     @ApiOperation(value = "ViewReserveOrders API")
-    public List<ReserveDetails> viewReserveOrders() {
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "ReservedModifyOrdered Success!!", response = Message.class),
+			@ApiResponse(code = 400, message = "ReservedModifyOrdered Failure") })
+    public ResponseEntity<?> viewReserveOrders() {
         List<ReserveDetails> list = null;
+        String errorMessage = null;
+
         try {
             list = reserveCanService.viewReserveOrders();
         } catch (Exception e) {
             e.printStackTrace();
+            errorMessage = e.getMessage();
         }
-        return list;
+        if (list != null)
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 }
