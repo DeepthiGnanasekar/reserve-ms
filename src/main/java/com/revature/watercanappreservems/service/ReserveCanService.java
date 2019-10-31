@@ -52,6 +52,7 @@ public class ReserveCanService {
 			ReserveDetails orderCan = new ReserveDetails();
 			orderCan.setReservedOrderCans(can);
 			orderCan.setReservedCans(can);
+			orderCan.setUserId(cans.getUserId());
 			orderCan.setUserName(cans.getUserName());
 			orderCan.setStatus("Ordered");
 			orderCan.setDate(LocalDateTime.now());
