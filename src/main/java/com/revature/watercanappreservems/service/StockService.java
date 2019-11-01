@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.revature.watercanappreservems.dto.ModifyReserveDto;
 import com.revature.watercanappreservems.dto.ReserveDto;
 import com.revature.watercanappreservems.dto.StockDto;
 import com.revature.watercanappreservems.model.ReserveDetails;
@@ -27,28 +28,26 @@ public class StockService {
 		for (StockDto stockDTO : stockList) {
 			list.add(stockDTO);
 		}
-		System.out.println(stockList);
 		return list;
 	}
 
 	void addReservedStocks(final ReserveDto reserveDto) {
-		System.out.println(reserveDto);
 		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/updateReservedCans", reserveDto,
 				String.class);
-		System.out.println(postForEntity.getBody());
 	}
 
-	void addReservedOrderedStocks(final ReserveDto reserveDto) {
-		System.out.println(reserveDto);
-		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/updateReservedCans", reserveDto,
+	void addReservedOrderedStocks(final ModifyReserveDto reserve) {
+		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/updateReservedCans", reserve,
 				String.class);
-		System.out.println(postForEntity.getBody());
 	}
 
-	void subReservedOrderedStocks(final ReserveDto reserveDto) {
-		System.out.println(reserveDto);
-		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/updateReservedCans", reserveDto,
+	void subReservedOrderedStocks(final ModifyReserveDto reserve) {
+		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/updateReservedCans", reserve,
 				String.class);
-		System.out.println(postForEntity.getBody());
+	}
+
+	 void addCancelStock(ReserveDetails cans) {
+		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/updateReservedCans", cans,
+				String.class);
 	}
 }

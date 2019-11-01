@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.revature.watercanappreservems.dto.Message;
+import com.revature.watercanappreservems.dto.ModifyReserveDto;
 import com.revature.watercanappreservems.dto.ReserveDto;
 import com.revature.watercanappreservems.exception.ServiceException;
 import com.revature.watercanappreservems.model.ReserveDetails;
@@ -37,7 +37,7 @@ public class ReserveCanController {
 		try {
 			result = reserveCanService.reserveStock(reserve);
 			status = "Success";
-		} catch (Exception e) {
+		} catch (ServiceException e) {
 			errorMessage = e.getMessage();
 		}
 		if (status != null) {
@@ -53,12 +53,12 @@ public class ReserveCanController {
 	@ApiOperation("ReserveOrderCanApi")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "ReservedOrdered Success!!", response = Message.class),
 			@ApiResponse(code = 400, message = "ReservedOrdered Failure") })
-	public ResponseEntity<?> reserveOrderCan(@RequestParam("reserveId") Integer reserveId) throws ServiceException {
+	public ResponseEntity<?> reserveOrderCan(@RequestBody ReserveDto reserve) {
 		String errorMessage = null;
 		ReserveDetails reserveCan = null;
 		try {
-			reserveCan = reserveCanService.reserveorderCan(reserveId);
-		} catch (Exception e) {
+			reserveCan = reserveCanService.reserveorderCan(reserve);
+		} catch (ServiceException e) {
 			errorMessage = e.getMessage();
 		}
 		if (reserveCan != null) {
@@ -73,7 +73,7 @@ public class ReserveCanController {
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "ReservedModifyOrdered Success!!", response = Message.class),
 			@ApiResponse(code = 400, message = "ReservedModifyOrdered Failure") })
-	public ResponseEntity<?> modifiedReservedCan(@RequestBody ReserveDto reserve) throws ServiceException {
+	public ResponseEntity<?> modifiedReservedCan(@RequestBody ModifyReserveDto reserve) throws ServiceException {
 		String errorMessage = null;
 		ReserveDetails orderCan = null;
 		try {
@@ -109,4 +109,26 @@ public class ReserveCanController {
 		else
 			return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
 	}
+	
+	@PostMapping("cancelReserveOrder")
+	@ApiOperation(value = "CancelReserveCan API")
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "Success", response = Message.class),
+			@ApiResponse(code = 400, message = "Invalid", response = Message.class) })
+	public ResponseEntity<?> cancelReserveOrder(@RequestBody ReserveDto reserve) {
+		String errorMessage = null;
+		ReserveDetails reserveCan = null;
+        try {
+        	reserveCan= reserveCanService.cancelReserve(reserve);
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
+        }
+        if (reserveCan != null) {
+        	
+            return new ResponseEntity<>(reserveCan, HttpStatus.OK);
+        } else {
+        	errorMessage = "Invalid Reserve ID";
+            Message message = new Message(errorMessage);
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+    }
 }
