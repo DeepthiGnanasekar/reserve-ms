@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiResponses;
 
 @RestController
 public class ReserveCanController {
-	
+
 	@Autowired
 	private ReserveCanService reserveCanService;
 
@@ -70,7 +70,8 @@ public class ReserveCanController {
 
 	@PostMapping("modifiedReservedCan")
 	@ApiOperation("ModifiedReservedCanApi")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "ReservedModifyOrdered Success!!", response = Message.class),
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "ReservedModifyOrdered Success!!", response = Message.class),
 			@ApiResponse(code = 400, message = "ReservedModifyOrdered Failure") })
 	public ResponseEntity<?> modifiedReservedCan(@RequestBody ReserveDto reserve) throws ServiceException {
 		String errorMessage = null;
@@ -87,24 +88,25 @@ public class ReserveCanController {
 			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	@GetMapping("viewReserveOrders")
-    @ApiOperation(value = "ViewReserveOrders API")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "ReservedModifyOrdered Success!!", response = Message.class),
-			@ApiResponse(code = 400, message = "ReservedModifyOrdered Failure") })
-    public ResponseEntity<?> viewReserveOrders() {
-        List<ReserveDetails> list = null;
-        String errorMessage = null;
 
-        try {
-            list = reserveCanService.viewReserveOrders();
-        } catch (Exception e) {
-            e.printStackTrace();
-            errorMessage = e.getMessage();
-        }
-        if (list != null)
-            return new ResponseEntity<>(list, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-    }
+	@GetMapping("viewReserveOrders")
+	@ApiOperation(value = "ViewReserveOrders API")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "ReservedModifyOrdered Success!!", response = Message.class),
+			@ApiResponse(code = 400, message = "ReservedModifyOrdered Failure") })
+	public ResponseEntity<?> viewReserveOrders() {
+		List<ReserveDetails> list = null;
+		String errorMessage = null;
+
+		try {
+			list = reserveCanService.viewReserveOrders();
+		} catch (Exception e) {
+			e.printStackTrace();
+			errorMessage = e.getMessage();
+		}
+		if (list != null)
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		else
+			return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+	}
 }

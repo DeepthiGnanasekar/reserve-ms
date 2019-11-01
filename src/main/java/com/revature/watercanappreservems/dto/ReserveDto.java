@@ -11,5 +11,4 @@ public class ReserveDto {
 	private int reservedCans;
 	private int reservedOrderCans;
 	private String status;
-	private LocalDateTime date;
 }
