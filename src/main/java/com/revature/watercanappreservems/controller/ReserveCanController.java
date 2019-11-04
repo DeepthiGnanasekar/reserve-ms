@@ -29,6 +29,30 @@ public class ReserveCanController {
 	@ApiOperation("ReserveCanApi")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Reserved Success", response = Message.class),
 			@ApiResponse(code = 400, message = "Reservation is not done") })
+	public ResponseEntity<Object> reserveCan(@RequestBody ReserveDto reserve) {
+		String errorMessage = null;
+		Message message = null;
+		String status = null;
+		ReserveDetails result = null;
+		try {
+			result = reserveCanService.reserveCan(reserve);
+			status = "Success";
+		} catch (ServiceException e) {
+			errorMessage = e.getMessage();
+		}
+		if (status != null) {
+			message = new Message(status);
+			return new ResponseEntity<>(result, HttpStatus.CREATED);
+		} else {
+			message = new Message(errorMessage);
+			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	/*@PostMapping("reserveCan")
+	@ApiOperation("ReserveCanApi")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Reserved Success", response = Message.class),
+			@ApiResponse(code = 400, message = "Reservation is not done") })
 	public ResponseEntity<Object> reserveCans(@RequestBody ReserveDto reserve) {
 		String errorMessage = null;
 		Message message = null;
@@ -47,7 +71,7 @@ public class ReserveCanController {
 			message = new Message(errorMessage);
 			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
 		}
-	}
+	}*/
 
 	@PostMapping("reserveOrderCan")
 	@ApiOperation("ReserveOrderCanApi")
@@ -95,6 +119,27 @@ public class ReserveCanController {
 			@ApiResponse(code = 200, message = "ReservedModifyOrdered Success!!", response = Message.class),
 			@ApiResponse(code = 400, message = "ReservedModifyOrdered Failure") })
 	public ResponseEntity<?> viewReserveOrders() {
+		List<ReserveDetails> list = null;
+		String errorMessage = null;
+
+		try {
+			list = reserveCanService.viewReserveOrders();
+		} catch (Exception e) {
+			e.printStackTrace();
+			errorMessage = e.getMessage();
+		}
+		if (list != null)
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		else
+			return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+	}
+	
+	@GetMapping("viewUserReserveOrders")
+	@ApiOperation(value = "ViewUserReserveOrders API")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "ReservedModifyOrdered Success!!", response = Message.class),
+			@ApiResponse(code = 400, message = "ReservedModifyOrdered Failure") })
+	public ResponseEntity<?> viewUserReserveOrders() {
 		List<ReserveDetails> list = null;
 		String errorMessage = null;
 

@@ -31,6 +31,11 @@ public class StockService {
 		return list;
 	}
 
+	void addReservedCans(final ReserveDto reserveDto) {
+		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/updateReservedCans", reserveDto,
+				String.class);
+	}
+	
 	void addReservedStocks(final ReserveDto reserveDto) {
 		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/updateReservedCans", reserveDto,
 				String.class);
