@@ -40,10 +40,13 @@ public class ReserveCanService {
 					result.setDate(LocalDateTime.now());
 					cans = reserveCanRepository.save(result);
 					stockService.addReservedStocks(reserve);
-				} 
+				} else {
+					throw new ServiceException("Invalid cans...!!!");
+				}
 			} 
 		 else {
-			 throw new ServiceException("Invalid cans...!!!");
+			 throw new ServiceException(
+						"Invalid cans...!!!");
 		}
 		return cans;
 	}
