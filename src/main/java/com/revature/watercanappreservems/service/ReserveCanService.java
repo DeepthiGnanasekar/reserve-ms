@@ -21,7 +21,7 @@ public class ReserveCanService {
 	@Autowired
 	private StockService stockService;
 
-	public ReserveDetails reserveCan(ReserveDto reserve) throws ServiceException {
+/*	public ReserveDetails reserveCan(ReserveDto reserve) throws ServiceException {
 		ReserveDetails cans = null;
 		ReserveDetails result = new ReserveDetails();
 		result.setReservedCans(reserve.getReservedCans());
@@ -45,29 +45,28 @@ public class ReserveCanService {
 				}
 			} 
 		 else {
-			 throw new ServiceException(
-						"Invalid cans...!!!");
+			 throw new ServiceException("Invalid cans...Please Check Your Availability Stock!!!");
 		}
 		return cans;
-	}
+	}*/
 
-	/*
-	 * public ReserveDetails reserveStock(ReserveDto reserve) throws
-	 * ServiceException { ReserveDetails cans = null; ReserveDetails result = new
-	 * ReserveDetails(); result.setReservedCans(reserve.getReservedCans());
-	 * result.setUserId(reserve.getUserId()); List<StockDto> stockList =
-	 * stockService.findAllStocks(); StockDto stockAvailability = stockList.get(0);
-	 * int stockCans = stockAvailability.getAvailableCans(); if
-	 * (reserve.getReservedCans() <= stockCans) {
-	 * result.setReservedCans(reserve.getReservedCans());
-	 * result.setUserId(reserve.getUserId());
-	 * result.setUserName(reserve.getUserName()); result.setStatus("Reserved");
-	 * result.setDate(LocalDateTime.now()); cans =
-	 * reserveCanRepository.save(result); stockService.addReservedStocks(reserve); }
-	 * else { throw new
-	 * ServiceException("Invalid cans...please check available stock and re enter your cans to reserve"
-	 * ); } return cans; }
-	 */
+	
+	 public ReserveDetails reserveStock(ReserveDto reserve) throws
+	  ServiceException { ReserveDetails cans = null; ReserveDetails result = new
+	  ReserveDetails(); result.setReservedCans(reserve.getReservedCans());
+	 result.setUserId(reserve.getUserId()); List<StockDto> stockList =
+	 stockService.findAllStocks(); StockDto stockAvailability = stockList.get(0);
+	  int stockCans = stockAvailability.getAvailableCans(); if
+	(reserve.getReservedCans() <= stockCans) {
+	  result.setReservedCans(reserve.getReservedCans());
+	 result.setUserId(reserve.getUserId());
+	  result.setUserName(reserve.getUserName()); result.setStatus("Reserved");
+	  result.setDate(LocalDateTime.now()); cans =
+	  reserveCanRepository.save(result); stockService.addReservedStocks(reserve); }
+	  else { throw new
+	  ServiceException("Invalid cans...please check available stock and re enter your cans to reserve"
+	  ); } return cans; }
+	 
 
 	public ReserveDetails reserveorderCan(ReserveDto reserve) throws ServiceException {
 		ReserveDetails orderCanValue = null;
