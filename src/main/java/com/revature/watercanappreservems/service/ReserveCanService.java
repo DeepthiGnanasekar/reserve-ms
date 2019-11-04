@@ -145,20 +145,16 @@ public class ReserveCanService {
 		return orderCanValue;
 	}
 
-	/*public ReserveDetails modifiedReserveCans(ModifyReserveDto reserve) throws ServiceException {
-		ReserveDetails result = null;
-		result = reserveCanRepository.findByReserveOrderId(reserve.getReserveId());
-		if (result != null) {
-			if (result.getReserveId() == reserve.getReserveId()) {
-				if (reserve.getReservedOrderCans() < result.getReservedCans()) {
-					stockService.passingCans(result.getReservedCans());
-				} else if (reserve.getReservedOrderCans() > result.getReservedCans()) {
-					stockService.passingCans(result.getReservedCans());
-				}
-			}
-		}
-		return result;
-	}*/
+	/*
+	 * public ReserveDetails modifiedReserveCans(ModifyReserveDto reserve) throws
+	 * ServiceException { ReserveDetails result = null; result =
+	 * reserveCanRepository.findByReserveOrderId(reserve.getReserveId()); if (result
+	 * != null) { if (result.getReserveId() == reserve.getReserveId()) { if
+	 * (reserve.getReservedOrderCans() < result.getReservedCans()) {
+	 * stockService.passingCans(result.getReservedCans()); } else if
+	 * (reserve.getReservedOrderCans() > result.getReservedCans()) {
+	 * stockService.passingCans(result.getReservedCans()); } } } return result; }
+	 */
 
 	public List<ReserveDetails> viewReserveOrders() throws ServiceException {
 		List<ReserveDetails> list = null;
