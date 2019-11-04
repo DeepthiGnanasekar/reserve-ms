@@ -30,7 +30,6 @@ public class ReserveCanService {
 		StockDto stockAvailability = stockList.get(0);
 		int stockCans = stockAvailability.getAvailableCans();
 		ReserveDetails reserveId = null;
-		try {
 			if (reserve.getReservedCans() <= stockCans) {
 				reserveId = reserveCanRepository.findByRepeatId(reserve.getUserId());
 				if (reserveId == null) {
@@ -41,16 +40,10 @@ public class ReserveCanService {
 					result.setDate(LocalDateTime.now());
 					cans = reserveCanRepository.save(result);
 					stockService.addReservedStocks(reserve);
-				} else {
-					throw new ServiceException(
-							"Invalid cans...please check available stock and re enter your cans to reserve");
-				}
-			} else {
-				throw new ServiceException("Please enter valid number of cans to reserve based on availability");
-			}
-		} catch (Exception e) {
-			throw new ServiceException(
-					"Sorry your cans has been already reserved  please Order that cans until then you cannot reserve your new cans...!!!");
+				} 
+			} 
+		 else {
+			 throw new ServiceException("Invalid cans...!!!");
 		}
 		return cans;
 	}
@@ -145,16 +138,20 @@ public class ReserveCanService {
 		return orderCanValue;
 	}
 
-	/*
-	 * public ReserveDetails modifiedReserveCans(ModifyReserveDto reserve) throws
-	 * ServiceException { ReserveDetails result = null; result =
-	 * reserveCanRepository.findByReserveOrderId(reserve.getReserveId()); if (result
-	 * != null) { if (result.getReserveId() == reserve.getReserveId()) { if
-	 * (reserve.getReservedOrderCans() < result.getReservedCans()) {
-	 * stockService.passingCans(result.getReservedCans()); } else if
-	 * (reserve.getReservedOrderCans() > result.getReservedCans()) {
-	 * stockService.passingCans(result.getReservedCans()); } } } return result; }
-	 */
+	/*public ReserveDetails modifiedReserveCans(ModifyReserveDto reserve) throws ServiceException {
+		ReserveDetails result = null;
+		result = reserveCanRepository.findByReserveOrderId(reserve.getReserveId());
+		if (result != null) {
+			if (result.getReserveId() == reserve.getReserveId()) {
+				if (reserve.getReservedOrderCans() < result.getReservedCans()) {
+					stockService.passingCans(result.getReservedCans());
+				} else if (reserve.getReservedOrderCans() > result.getReservedCans()) {
+					stockService.passingCans(result.getReservedCans());
+				}
+			}
+		}
+		return result;
+	}*/
 
 	public List<ReserveDetails> viewReserveOrders() throws ServiceException {
 		List<ReserveDetails> list = null;
