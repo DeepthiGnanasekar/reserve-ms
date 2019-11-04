@@ -95,7 +95,7 @@ public class ReserveCanService {
 		return orderCanValue;
 	}
 
-	public ReserveDetails modifiedReserveCan(ModifyReserveDto reserve) throws ServiceException {
+	public ReserveDetails modifiedReserveCan(ReserveDto reserve) throws ServiceException {
 		ReserveDetails orderCanValue = null;
 		ReserveDetails result = null;
 		result = reserveCanRepository.findByReserveOrderId(reserve.getReserveId());
@@ -145,7 +145,7 @@ public class ReserveCanService {
 		return orderCanValue;
 	}
 
-	public ReserveDetails modifiedReserveCans(ModifyReserveDto reserve) throws ServiceException {
+	/*public ReserveDetails modifiedReserveCans(ModifyReserveDto reserve) throws ServiceException {
 		ReserveDetails result = null;
 		result = reserveCanRepository.findByReserveOrderId(reserve.getReserveId());
 		if (result != null) {
@@ -158,7 +158,7 @@ public class ReserveCanService {
 			}
 		}
 		return result;
-	}
+	}*/
 
 	public List<ReserveDetails> viewReserveOrders() throws ServiceException {
 		List<ReserveDetails> list = null;

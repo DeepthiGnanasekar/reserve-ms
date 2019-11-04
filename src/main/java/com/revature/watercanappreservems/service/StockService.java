@@ -42,12 +42,12 @@ public class StockService {
 	 * reserveDto, String.class); }
 	 */
 
-	void addReservedOrderedStocks(final ModifyReserveDto reserve) {
+	void addReservedOrderedStocks(final ReserveDto reserve) {
 		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/updateReservedCans", reserve,
 				String.class);
 	}
 
-	void subReservedOrderedStocks(final ModifyReserveDto reserve) {
+	void subReservedOrderedStocks(final ReserveDto reserve) {
 		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/updateReservedCans", reserve,
 				String.class);
 	}

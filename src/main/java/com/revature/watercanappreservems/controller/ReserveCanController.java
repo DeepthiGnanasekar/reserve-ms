@@ -92,7 +92,7 @@ public class ReserveCanController {
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "ReservedModifyOrdered Success!!", response = Message.class),
 			@ApiResponse(code = 400, message = "ReservedModifyOrdered Failure") })
-	public ResponseEntity<?> modifiedReservedCan(@RequestBody ModifyReserveDto reserve) throws ServiceException {
+	public ResponseEntity<?> modifiedReservedCan(@RequestBody ReserveDto reserve) throws ServiceException {
 		String errorMessage = null;
 		ReserveDetails orderCan = null;
 		try {
@@ -108,7 +108,7 @@ public class ReserveCanController {
 		}
 	}
 
-	@PostMapping("modifiedReservedCans")
+	/*@PostMapping("modifiedReservedCans")
 	@ApiOperation("ModifiedReservedCansApi")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "ReservedModifyOrdered Success!!", response = Message.class),
@@ -127,7 +127,7 @@ public class ReserveCanController {
 			Message message = new Message(errorMessage);
 			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
 		}
-	}
+	}*/
 
 	@GetMapping("viewReserveOrders")
 	@ApiOperation(value = "ViewReserveOrders API")
