@@ -31,15 +31,16 @@ public class StockService {
 		return list;
 	}
 
-	void addReservedCans(final ReserveDto reserveDto) {
-		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/updateReservedCans", reserveDto,
-				String.class);
-	}
-	
 	void addReservedStocks(final ReserveDto reserveDto) {
 		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/updateReservedCans", reserveDto,
 				String.class);
 	}
+
+	/*
+	 * void addReservedStocks(final ReserveDto reserveDto) { ResponseEntity<String>
+	 * postForEntity = restTemplate.postForEntity(apiUrl + "/updateReservedCans",
+	 * reserveDto, String.class); }
+	 */
 
 	void addReservedOrderedStocks(final ModifyReserveDto reserve) {
 		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/updateReservedCans", reserve,
@@ -51,7 +52,12 @@ public class StockService {
 				String.class);
 	}
 
-	 void addCancelStock(ReserveDetails cans) {
+	void addCancelStock(ReserveDetails cans) {
+		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/updateReservedCans", cans,
+				String.class);
+	}
+
+	void passingCans(int cans) {
 		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/updateReservedCans", cans,
 				String.class);
 	}

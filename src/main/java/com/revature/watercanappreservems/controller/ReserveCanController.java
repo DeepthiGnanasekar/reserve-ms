@@ -48,30 +48,25 @@ public class ReserveCanController {
 			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	/*@PostMapping("reserveCan")
-	@ApiOperation("ReserveCanApi")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Reserved Success", response = Message.class),
-			@ApiResponse(code = 400, message = "Reservation is not done") })
-	public ResponseEntity<Object> reserveCans(@RequestBody ReserveDto reserve) {
-		String errorMessage = null;
-		Message message = null;
-		String status = null;
-		ReserveDetails result = null;
-		try {
-			result = reserveCanService.reserveStock(reserve);
-			status = "Success";
-		} catch (ServiceException e) {
-			errorMessage = e.getMessage();
-		}
-		if (status != null) {
-			message = new Message(status);
-			return new ResponseEntity<>(result, HttpStatus.CREATED);
-		} else {
-			message = new Message(errorMessage);
-			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-		}
-	}*/
+
+	/*
+	 * @PostMapping("reserveCan")
+	 * 
+	 * @ApiOperation("ReserveCanApi")
+	 * 
+	 * @ApiResponses(value = { @ApiResponse(code = 200, message =
+	 * "Reserved Success", response = Message.class),
+	 * 
+	 * @ApiResponse(code = 400, message = "Reservation is not done") }) public
+	 * ResponseEntity<Object> reserveCans(@RequestBody ReserveDto reserve) { String
+	 * errorMessage = null; Message message = null; String status = null;
+	 * ReserveDetails result = null; try { result =
+	 * reserveCanService.reserveStock(reserve); status = "Success"; } catch
+	 * (ServiceException e) { errorMessage = e.getMessage(); } if (status != null) {
+	 * message = new Message(status); return new ResponseEntity<>(result,
+	 * HttpStatus.CREATED); } else { message = new Message(errorMessage); return new
+	 * ResponseEntity<>(message, HttpStatus.BAD_REQUEST); } }
+	 */
 
 	@PostMapping("reserveOrderCan")
 	@ApiOperation("ReserveOrderCanApi")
@@ -113,6 +108,27 @@ public class ReserveCanController {
 		}
 	}
 
+	@PostMapping("modifiedReservedCans")
+	@ApiOperation("ModifiedReservedCansApi")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "ReservedModifyOrdered Success!!", response = Message.class),
+			@ApiResponse(code = 400, message = "ReservedModifyOrdered Failure") })
+	public ResponseEntity<?> modifiedReservedCans(@RequestBody ModifyReserveDto reserve) throws ServiceException {
+		String errorMessage = null;
+		ReserveDetails orderCan = null;
+		try {
+			orderCan = reserveCanService.modifiedReserveCans(reserve);
+		} catch (Exception e) {
+			errorMessage = e.getMessage();
+		}
+		if (orderCan != null) {
+			return new ResponseEntity<>(orderCan, HttpStatus.OK);
+		} else {
+			Message message = new Message(errorMessage);
+			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+		}
+	}
+
 	@GetMapping("viewReserveOrders")
 	@ApiOperation(value = "ViewReserveOrders API")
 	@ApiResponses(value = {
@@ -133,7 +149,7 @@ public class ReserveCanController {
 		else
 			return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
 	}
-	
+
 	@GetMapping("viewUserReserveOrders")
 	@ApiOperation(value = "ViewUserReserveOrders API")
 	@ApiResponses(value = {
@@ -154,7 +170,7 @@ public class ReserveCanController {
 		else
 			return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
 	}
-	
+
 	@PostMapping("cancelReserveOrder")
 	@ApiOperation(value = "CancelReserveCan API")
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Success", response = Message.class),
@@ -162,18 +178,18 @@ public class ReserveCanController {
 	public ResponseEntity<?> cancelReserveOrder(@RequestBody ReserveDto reserve) {
 		String errorMessage = null;
 		ReserveDetails reserveCan = null;
-        try {
-        	reserveCan= reserveCanService.cancelReserve(reserve);
-        } catch (Exception e) {
-            errorMessage = e.getMessage();
-        }
-        if (reserveCan != null) {
-        	
-            return new ResponseEntity<>(reserveCan, HttpStatus.OK);
-        } else {
-        	errorMessage = "Invalid Reserve ID";
-            Message message = new Message(errorMessage);
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-        }
-    }
+		try {
+			reserveCan = reserveCanService.cancelReserve(reserve);
+		} catch (Exception e) {
+			errorMessage = e.getMessage();
+		}
+		if (reserveCan != null) {
+
+			return new ResponseEntity<>(reserveCan, HttpStatus.OK);
+		} else {
+			errorMessage = "Invalid Reserve ID";
+			Message message = new Message(errorMessage);
+			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+		}
+	}
 }
