@@ -148,6 +148,7 @@ public class ReserveCanController {
 			return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
 	}
 
+	
 	/*
 	 * @GetMapping("viewUserReserveOrders")
 	 * 
@@ -159,15 +160,14 @@ public class ReserveCanController {
 	 * response = Message.class),
 	 * 
 	 * @ApiResponse(code = 400, message = "ReservedModifyOrdered Failure") }) public
-	 * ResponseEntity<?> viewUserReserveOrders(@RequestBody ReserveDto reserve) {
-	 * List<ReserveDetails> list = null; String errorMessage = null;
+	 * ResponseEntity<?> viewUserReserveOrders() { List<ReserveDetails> list = null;
+	 * String errorMessage = null;
 	 * 
-	 * try { list = reserveCanService.viewUserReserveOrders(reserve); } catch
-	 * (Exception e) { e.printStackTrace(); errorMessage = e.getMessage(); } if
-	 * (list != null) return new ResponseEntity<>(list, HttpStatus.OK); else return
-	 * new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST); }
+	 * try { list = reserveCanService.viewUserReserveOrders(); } catch (Exception e)
+	 * { e.printStackTrace(); errorMessage = e.getMessage(); } if (list != null)
+	 * return new ResponseEntity<>(list, HttpStatus.OK); else return new
+	 * ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST); }
 	 */
-
 	/*
 	 * @PostMapping("cancelReserveOrder")
 	 * 

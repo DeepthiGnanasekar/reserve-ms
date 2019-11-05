@@ -44,7 +44,7 @@ public class ReserveCanService {
 				throw new ServiceException(MessageConstant.INVALID_RESERVEORDER);
 			}
 		} else {
-			throw new ServiceException("Invalid cans...Please Check Your Availability Stock!!!");
+			throw new ServiceException(MessageConstant.INVALID_MODIFY_CANS);
 		}
 		return cans;
 	}
@@ -100,6 +100,11 @@ public class ReserveCanService {
 		result = reserveCanRepository.findByReserveOrderId(reserve.getReserveId());
 		if (result != null) {
 			if (result.getReserveId() == reserve.getReserveId()) {
+				List<StockDto> stockList = stockService.findAllStocks();
+				StockDto stockAvailability = stockList.get(0);
+				int stockCans = stockAvailability.getAvailableCans();
+				int reserveCan = reserve.getReservedOrderCans();
+				if( reserveCan < stockCans) {
 				if (reserve.getReservedOrderCans() < result.getReservedCans()) {
 					ReserveDetails orderCan = new ReserveDetails();
 					orderCan.setReservedCans(result.getReservedCans());
@@ -129,7 +134,10 @@ public class ReserveCanService {
 				} else {
 					throw new ServiceException(MessageConstant.INVALID_CANS);
 				}
-			} else {
+			}else {
+				throw new ServiceException(MessageConstant.INVALID_MODIFY_CANS);
+			} 
+			}else {
 				throw new ServiceException(MessageConstant.INVALID_RESERVEID);
 			}
 		} else {
@@ -157,13 +165,15 @@ public class ReserveCanService {
 		}
 		return list;
 	}
-
-	/*
-	 * public List<ReserveDetails> viewUserReserveOrders(ReserveDto reserve) {
-	 * List<ReserveDetails> list = null; list =
-	 * reserveCanRepository.findById(reserve); if (list == null) { throw new
-	 * ServiceException(MessageConstant.INVALID_RESERVEORDERS); } return list; } }
-	 */
+}
+	
+/*
+ * public List<ReserveDetails> viewUserReserveOrders() throws ServiceException {
+ * List<ReserveDetails> list = null; list =
+ * reserveCanRepository.findById(reserve.getUserId()); if (list == null) { throw
+ * new ServiceException(MessageConstant.INVALID_RESERVEORDERS); } return list; }
+ * }
+ */ 
 	  
 	/*
 	 * public ReserveDetails cancelReserve(ReserveDto reserve) throws
@@ -178,4 +188,3 @@ public class ReserveCanService {
 	 * }
 	 */
 	 
-}

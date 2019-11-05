@@ -1,5 +1,7 @@
 package com.revature.watercanappreservems.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,4 +23,7 @@ public interface ReserveCanRepository extends JpaRepository<ReserveDetails, Stri
 	
 	@Query(" from ReserveDetails where reserveId = :reserveId")
 	ReserveDetails findByCancelId(@Param("reserveId")int reserveId);
+	
+	@Query(" from ReserveDetails where reserveId = :reserveId")
+	List<ReserveDetails> findById(@Param("reserveId")int reserveId);
 }

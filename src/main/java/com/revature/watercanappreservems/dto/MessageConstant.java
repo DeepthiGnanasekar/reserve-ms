@@ -12,4 +12,5 @@ public class MessageConstant {
 	public static final String INVALID_RESERVEORDER = "Sorry your cans has been already reserved  please Order that cans until then you cannot reserve your new cans...!!!";
 	public static final String INVALID_RESERVEID = "Invalid ReserveId";
 	public static final String INVALID_CANS = "Your Input Cans is  greater than your reserved water-cans...!!!Please enter valid number of cans...!!!";
+	public static final String INVALID_MODIFY_CANS = "Invalid cans...Please Check Your Availability Stock!!!";
 }
