@@ -47,7 +47,6 @@ public class ReserveCanController {
 		}
 	}
 
-	
 	/*
 	 * @PostMapping("reserveCan")
 	 * 
@@ -108,26 +107,25 @@ public class ReserveCanController {
 		}
 	}
 
-	/*@PostMapping("modifiedReservedCans")
-	@ApiOperation("ModifiedReservedCansApi")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "ReservedModifyOrdered Success!!", response = Message.class),
-			@ApiResponse(code = 400, message = "ReservedModifyOrdered Failure") })
-	public ResponseEntity<?> modifiedReservedCans(@RequestBody ModifyReserveDto reserve) throws ServiceException {
-		String errorMessage = null;
-		ReserveDetails orderCan = null;
-		try {
-			orderCan = reserveCanService.modifiedReserveCans(reserve);
-		} catch (Exception e) {
-			errorMessage = e.getMessage();
-		}
-		if (orderCan != null) {
-			return new ResponseEntity<>(orderCan, HttpStatus.OK);
-		} else {
-			Message message = new Message(errorMessage);
-			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-		}
-	}*/
+	/*
+	 * @PostMapping("modifiedReservedCans")
+	 * 
+	 * @ApiOperation("ModifiedReservedCansApi")
+	 * 
+	 * @ApiResponses(value = {
+	 * 
+	 * @ApiResponse(code = 200, message = "ReservedModifyOrdered Success!!",
+	 * response = Message.class),
+	 * 
+	 * @ApiResponse(code = 400, message = "ReservedModifyOrdered Failure") }) public
+	 * ResponseEntity<?> modifiedReservedCans(@RequestBody ModifyReserveDto reserve)
+	 * throws ServiceException { String errorMessage = null; ReserveDetails orderCan
+	 * = null; try { orderCan = reserveCanService.modifiedReserveCans(reserve); }
+	 * catch (Exception e) { errorMessage = e.getMessage(); } if (orderCan != null)
+	 * { return new ResponseEntity<>(orderCan, HttpStatus.OK); } else { Message
+	 * message = new Message(errorMessage); return new ResponseEntity<>(message,
+	 * HttpStatus.BAD_REQUEST); } }
+	 */
 
 	@GetMapping("viewReserveOrders")
 	@ApiOperation(value = "ViewReserveOrders API")
@@ -150,7 +148,6 @@ public class ReserveCanController {
 			return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
 	}
 
-	
 	/*
 	 * @GetMapping("viewUserReserveOrders")
 	 * 
