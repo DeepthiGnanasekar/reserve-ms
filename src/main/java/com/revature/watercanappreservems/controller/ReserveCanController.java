@@ -29,7 +29,7 @@ public class ReserveCanController {
 	@PostMapping("reserveCan")
 	@ApiOperation("ReserveCanApi")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Reserved Success", response = Message.class),
-			@ApiResponse(code = 400, message = "Reservation is not done") })
+	@ApiResponse(code = 400, message = "Reservation is not done") })
 	public ResponseEntity<Object> reserveCan(@RequestBody ReserveDto reserve) {
 		String errorMessage = null;
 		Message message = null;
