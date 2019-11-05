@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import com.revature.watercanappreservems.dto.ModifyReserveOrderDto;
 import com.revature.watercanappreservems.dto.ReserveDto;
 import com.revature.watercanappreservems.dto.StockDto;
 
@@ -38,12 +40,12 @@ public class StockService {
 	 * reserveDto, String.class); }
 	 */
 
-	void addReservedOrderedStocks(final ReserveDto reserve) {
+	void addReservedOrderedStocks(final ModifyReserveOrderDto reserve) {
 		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/modifiedReservedCan", reserve,
 				String.class);
 	}
 
-	void subReservedOrderedStocks(final ReserveDto reserve) {
+	void subReservedOrderedStocks(final ModifyReserveOrderDto reserve) {
 		ResponseEntity<String> postForEntity = restTemplate.postForEntity(apiUrl + "/modifiedReservedCan", reserve,
 				String.class);
 	}

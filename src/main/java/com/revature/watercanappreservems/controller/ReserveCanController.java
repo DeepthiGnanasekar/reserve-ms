@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.revature.watercanappreservems.dto.Message;
+import com.revature.watercanappreservems.dto.ModifyReserveOrderDto;
 import com.revature.watercanappreservems.dto.ReserveDto;
+import com.revature.watercanappreservems.dto.ReserveOrderDto;
 import com.revature.watercanappreservems.exception.ServiceException;
 import com.revature.watercanappreservems.model.ReserveDetails;
 import com.revature.watercanappreservems.service.ReserveCanService;
@@ -70,7 +72,7 @@ public class ReserveCanController {
 	@ApiOperation("ReserveOrderCanApi")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "ReservedOrdered Success!!", response = Message.class),
 			@ApiResponse(code = 400, message = "ReservedOrdered Failure") })
-	public ResponseEntity<?> reserveOrderCan(@RequestBody ReserveDto reserve) {
+	public ResponseEntity<?> reserveOrderCan(@RequestBody ReserveOrderDto reserve) {
 		String errorMessage = null;
 		ReserveDetails reserveCan = null;
 		try {
@@ -90,7 +92,7 @@ public class ReserveCanController {
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "ReservedModifyOrdered Success!!", response = Message.class),
 			@ApiResponse(code = 400, message = "ReservedModifyOrdered Failure") })
-	public ResponseEntity<?> modifiedReservedCan(@RequestBody ReserveDto reserve) throws ServiceException {
+	public ResponseEntity<?> modifiedReservedCan(@RequestBody ModifyReserveOrderDto reserve) throws ServiceException {
 		String errorMessage = null;
 		ReserveDetails orderCan = null;
 		try {

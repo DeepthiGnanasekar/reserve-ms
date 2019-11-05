@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.revature.watercanappreservems.dto.MessageConstant;
+import com.revature.watercanappreservems.dto.ModifyReserveOrderDto;
 import com.revature.watercanappreservems.exception.ServiceException;
 import com.revature.watercanappreservems.dto.ReserveDto;
+import com.revature.watercanappreservems.dto.ReserveOrderDto;
 import com.revature.watercanappreservems.dto.StockDto;
 import com.revature.watercanappreservems.model.ReserveDetails;
 import com.revature.watercanappreservems.repository.ReserveCanRepository;
@@ -72,7 +74,7 @@ public class ReserveCanService {
 	 * catch (Exception e) { e.printStackTrace(); throw new
 	 * ServiceException("Unable to Order"); } return cans; }
 	 */
-	public ReserveDetails reserveorderCan(ReserveDto reserve) throws ServiceException {
+	public ReserveDetails reserveorderCan(ReserveOrderDto reserve) throws ServiceException {
 		ReserveDetails orderCanValue = null;
 		ReserveDetails cans = reserveCanRepository.findByReserveId(reserve.getReserveId());
 		if (cans != null) {
@@ -94,7 +96,7 @@ public class ReserveCanService {
 		return orderCanValue;
 	}
 
-	public ReserveDetails modifiedReserveCan(ReserveDto reserve) throws ServiceException {
+	public ReserveDetails modifiedReserveCan(ModifyReserveOrderDto reserve) throws ServiceException {
 		ReserveDetails orderCanValue = null;
 		ReserveDetails result = null;
 		result = reserveCanRepository.findByReserveOrderId(reserve.getReserveId());
