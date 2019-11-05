@@ -7,6 +7,4 @@ public class ReserveOrderDto {
 	private int reserveId;
 	private int userId;
 	private String userName;
-	private int reservedCans;
-	private int reservedOrderCans;
 }
