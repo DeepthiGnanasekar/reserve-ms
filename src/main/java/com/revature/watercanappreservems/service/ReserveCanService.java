@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.revature.watercanappreservems.dto.MessageConstant;
-import com.revature.watercanappreservems.dto.ModifyReserveDto;
 import com.revature.watercanappreservems.exception.ServiceException;
 import com.revature.watercanappreservems.dto.ReserveDto;
 import com.revature.watercanappreservems.dto.StockDto;
@@ -21,53 +20,48 @@ public class ReserveCanService {
 	@Autowired
 	private StockService stockService;
 
-/*	public ReserveDetails reserveCan(ReserveDto reserve) throws ServiceException {
-		ReserveDetails cans = null;
-		ReserveDetails result = new ReserveDetails();
-		result.setReservedCans(reserve.getReservedCans());
-		result.setUserId(reserve.getUserId());
-		List<StockDto> stockList = stockService.findAllStocks();
-		StockDto stockAvailability = stockList.get(0);
-		int stockCans = stockAvailability.getAvailableCans();
-		ReserveDetails reserveId = null;
-			if (reserve.getReservedCans() <= stockCans) {
-				reserveId = reserveCanRepository.findByRepeatId(reserve.getUserId());
-				if (reserveId == null) {
-					result.setReservedCans(reserve.getReservedCans());
-					result.setUserId(reserve.getUserId());
-					result.setUserName(reserve.getUserName());
-					result.setStatus("Reserved");
-					result.setDate(LocalDateTime.now());
-					cans = reserveCanRepository.save(result);
-					stockService.addReservedStocks(reserve);
-				} else {
-					throw new ServiceException("Invalid cans...!!!");
-				}
-			} 
-		 else {
-			 throw new ServiceException("Invalid cans...Please Check Your Availability Stock!!!");
-		}
-		return cans;
-	}*/
-
 	
-	 public ReserveDetails reserveStock(ReserveDto reserve) throws
-	  ServiceException { ReserveDetails cans = null; ReserveDetails result = new
-	  ReserveDetails(); result.setReservedCans(reserve.getReservedCans());
-	 result.setUserId(reserve.getUserId()); List<StockDto> stockList =
-	 stockService.findAllStocks(); StockDto stockAvailability = stockList.get(0);
-	  int stockCans = stockAvailability.getAvailableCans(); if
-	(reserve.getReservedCans() <= stockCans) {
+	  public ReserveDetails reserveCan(ReserveDto reserve) throws ServiceException
+	  { ReserveDetails cans = null; ReserveDetails result = new ReserveDetails();
 	  result.setReservedCans(reserve.getReservedCans());
-	 result.setUserId(reserve.getUserId());
+	  result.setUserId(reserve.getUserId()); List<StockDto> stockList =
+	  stockService.findAllStocks(); StockDto stockAvailability = stockList.get(0);
+	  int stockCans = stockAvailability.getAvailableCans(); ReserveDetails
+	  reserveId = null; if (reserve.getReservedCans() <= stockCans) { reserveId =
+	  reserveCanRepository.findByRepeatId(reserve.getUserId()); if (reserveId ==
+	  null) { result.setReservedCans(reserve.getReservedCans());
+	  result.setUserId(reserve.getUserId());
 	  result.setUserName(reserve.getUserName()); result.setStatus("Reserved");
 	  result.setDate(LocalDateTime.now()); cans =
 	  reserveCanRepository.save(result); stockService.addReservedStocks(reserve); }
-	  else { throw new
-	  ServiceException("Invalid cans...please check available stock and re enter your cans to reserve"
-	  ); } return cans; }
+	  else { throw new ServiceException(MessageConstant.INVALID_RESERVEORDER); } } else { throw new
+	  ServiceException("Invalid cans...Please Check Your Availability Stock!!!"); }
+	  return cans; }
 	 
 
+	/*
+	 * public ReserveDetails reserveStock(ReserveDto reserve) throws
+	 * ServiceException { ReserveDetails cans = null; ReserveDetails result = new
+	 * ReserveDetails(); result.setReservedCans(reserve.getReservedCans());
+	 * result.setUserId(reserve.getUserId()); List<StockDto> stockList =
+	 * stockService.findAllStocks(); StockDto stockAvailability = stockList.get(0);
+	 * int stockCans = stockAvailability.getAvailableCans(); if
+	 * (reserve.getReservedCans() <= stockCans) {
+	 * result.setReservedCans(reserve.getReservedCans());
+	 * result.setUserId(reserve.getUserId());
+	 * result.setUserName(reserve.getUserName()); result.setStatus("Reserved");
+	 * result.setDate(LocalDateTime.now()); cans =
+	 * reserveCanRepository.save(result); stockService.addReservedStocks(reserve); }
+	 * else { throw new ServiceException(MessageConstant.INVALID_CANS); } return
+	 * cans; }
+	 */
+	/*
+	 * try { MailDto mail = new MailDto(); ReserveDto orderDTO = new ReserveDto();
+	 * mail.setName(orderDTO.getUserName()); mail.setEmail(orderDTO.getEmail());
+	 * MailService mailservice=new MailService(); mailservice.sendMail(mail); }
+	 * catch (Exception e) { e.printStackTrace(); throw new
+	 * ServiceException("Unable to Order"); } return cans; }
+	 */
 	public ReserveDetails reserveorderCan(ReserveDto reserve) throws ServiceException {
 		ReserveDetails orderCanValue = null;
 		ReserveDetails cans = reserveCanRepository.findByReserveId(reserve.getReserveId());
@@ -98,8 +92,8 @@ public class ReserveCanService {
 			if (result.getReserveId() == reserve.getReserveId()) {
 				if (reserve.getReservedOrderCans() < result.getReservedCans()) {
 					ReserveDetails orderCan = new ReserveDetails();
-					orderCan.setReservedOrderCans(reserve.getReservedOrderCans());
 					orderCan.setReservedCans(result.getReservedCans());
+					orderCan.setReservedOrderCans(reserve.getReservedOrderCans());
 					orderCan.setUserId(result.getUserId());
 					orderCan.setUserName(result.getUserName());
 					orderCan.setStatus("Ordered");
@@ -108,14 +102,11 @@ public class ReserveCanService {
 					ReserveDetails reserveCans = new ReserveDetails();
 					reserveCans.setReserveId(reserve.getReserveId());
 					reserveCanRepository.delete(reserveCans);
-					List<StockDto> stockList = stockService.findAllStocks();
-					StockDto stockAvailability = stockList.get(0);
-					stockAvailability.getAvailableCans();
 					stockService.addReservedOrderedStocks(reserve);
 				} else if (reserve.getReservedOrderCans() > result.getReservedCans()) {
 					ReserveDetails orderCan = new ReserveDetails();
-					orderCan.setReservedOrderCans(reserve.getReservedOrderCans());
 					orderCan.setReservedCans(result.getReservedCans());
+					orderCan.setReservedOrderCans(reserve.getReservedOrderCans());
 					orderCan.setUserId(result.getUserId());
 					orderCan.setUserName(result.getUserName());
 					orderCan.setStatus("Ordered");
@@ -124,9 +115,6 @@ public class ReserveCanService {
 					ReserveDetails reserveCans = new ReserveDetails();
 					reserveCans.setReserveId(reserve.getReserveId());
 					reserveCanRepository.delete(reserveCans);
-					List<StockDto> stockList = stockService.findAllStocks();
-					StockDto stockAvailability = stockList.get(0);
-					stockAvailability.getAvailableCans();
 					stockService.subReservedOrderedStocks(reserve);
 				} else {
 					throw new ServiceException(MessageConstant.INVALID_CANS);
@@ -140,20 +128,16 @@ public class ReserveCanService {
 		return orderCanValue;
 	}
 
-	/*public ReserveDetails modifiedReserveCans(ModifyReserveDto reserve) throws ServiceException {
-		ReserveDetails result = null;
-		result = reserveCanRepository.findByReserveOrderId(reserve.getReserveId());
-		if (result != null) {
-			if (result.getReserveId() == reserve.getReserveId()) {
-				if (reserve.getReservedOrderCans() < result.getReservedCans()) {
-					stockService.passingCans(result.getReservedCans());
-				} else if (reserve.getReservedOrderCans() > result.getReservedCans()) {
-					stockService.passingCans(result.getReservedCans());
-				}
-			}
-		}
-		return result;
-	}*/
+	/*
+	 * public ReserveDetails modifiedReserveCans(ModifyReserveDto reserve) throws
+	 * ServiceException { ReserveDetails result = null; result =
+	 * reserveCanRepository.findByReserveOrderId(reserve.getReserveId()); if (result
+	 * != null) { if (result.getReserveId() == reserve.getReserveId()) { if
+	 * (reserve.getReservedOrderCans() < result.getReservedCans()) {
+	 * stockService.passingCans(result.getReservedCans()); } else if
+	 * (reserve.getReservedOrderCans() > result.getReservedCans()) {
+	 * stockService.passingCans(result.getReservedCans()); } } } return result; }
+	 */
 
 	public List<ReserveDetails> viewReserveOrders() throws ServiceException {
 		List<ReserveDetails> list = null;
@@ -165,21 +149,23 @@ public class ReserveCanService {
 	}
 
 	/*
-	 * public List<ReserveDetails> viewUserReserveOrders() throws ServiceException {
-	 * List<ReserveDetails> list = null; list = reserveCanRepository.findById(); if
-	 * (list == null) { throw new
-	 * ServiceException(MessageConstant.INVALID_RESERVEORDERS); } return list; }
+	 * public List<ReserveDetails> viewUserReserveOrders(ReserveDto reserve) {
+	 * List<ReserveDetails> list = null; list =
+	 * reserveCanRepository.findById(reserve); if (list == null) { throw new
+	 * ServiceException(MessageConstant.INVALID_RESERVEORDERS); } return list; } }
 	 */
-	public ReserveDetails cancelReserve(ReserveDto reserve) throws ServiceException {
-		ReserveDetails cans = reserveCanRepository.findByCancelId(reserve.getReserveId());
-		if (cans.getUserId() != reserve.getUserId() && cans.getStatus() != "Reserved") {
-			ReserveDetails canId = new ReserveDetails();
-			canId.setReserveId(reserve.getReserveId());
-			reserveCanRepository.delete(canId);
-			stockService.addCancelStock(cans);
-		} else if (cans.getUserName() == reserve.getUserName() && cans.getStatus() == "Reserved") {
-			throw new ServiceException("Invalid ReserveId");
-		}
-		return cans;
-	}
+	  
+	/*
+	 * public ReserveDetails cancelReserve(ReserveDto reserve) throws
+	 * ServiceException { ReserveDetails cans =
+	 * reserveCanRepository.findByCancelId(reserve.getReserveId()); if
+	 * (cans.getUserId() != reserve.getUserId() && cans.getStatus() != "Reserved") {
+	 * ReserveDetails canId = new ReserveDetails();
+	 * canId.setReserveId(reserve.getReserveId());
+	 * reserveCanRepository.delete(canId); stockService.addCancelStock(cans); } else
+	 * if (cans.getUserName() == reserve.getUserName() && cans.getStatus() ==
+	 * "Reserved") { throw new ServiceException("Invalid ReserveId"); } return cans;
+	 * }
+	 */
+	 
 }

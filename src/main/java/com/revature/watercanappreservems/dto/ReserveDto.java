@@ -11,4 +11,5 @@ public class ReserveDto {
 	private int reservedCans;
 	private int reservedOrderCans;
 	private LocalDateTime date;
+	//private String email;
 }

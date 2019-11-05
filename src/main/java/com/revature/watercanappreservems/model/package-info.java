@@ -1,1 +1,1 @@
-package com.deeps.watercanappapi.model;
+package com.revature.watercanappreservems.model;

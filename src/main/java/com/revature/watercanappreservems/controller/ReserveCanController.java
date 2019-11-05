@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.revature.watercanappreservems.dto.Message;
-import com.revature.watercanappreservems.dto.ModifyReserveDto;
 import com.revature.watercanappreservems.dto.ReserveDto;
 import com.revature.watercanappreservems.exception.ServiceException;
 import com.revature.watercanappreservems.model.ReserveDetails;
@@ -25,7 +24,7 @@ public class ReserveCanController {
 	@Autowired
 	private ReserveCanService reserveCanService;
 
-	/*@PostMapping("reserveCan")
+	@PostMapping("reserveCan")
 	@ApiOperation("ReserveCanApi")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Reserved Success", response = Message.class),
 			@ApiResponse(code = 400, message = "Reservation is not done") })
@@ -47,31 +46,28 @@ public class ReserveCanController {
 			message = new Message(errorMessage);
 			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
 		}
-	}*/
+	}
 
 	
-	  @PostMapping("reserveCan")
-	  @ApiOperation("ReserveCanApi")
-	  @ApiResponses(value = { @ApiResponse(code = 200, message = "Reserved Success", response = Message.class),
-	  @ApiResponse(code = 400, message = "Reservation is not done") })
-	  public ResponseEntity<Object> reserveCan(@RequestBody ReserveDto reserve) 
-	  { String errorMessage = null; 
-	  Message message = null; 
-	  String status = null;
-	  ReserveDetails result = null;
-	  try { 
-		  result = reserveCanService.reserveStock(reserve); 
-		  status = "Success"; 
-		  } catch(ServiceException e) { 
-			  errorMessage = e.getMessage(); 
-			  }
-	  if (status != null) { 
-	  message = new Message(status); 
-	  return new ResponseEntity<>(result,HttpStatus.CREATED);
-	  }
-	  else { message = new Message(errorMessage); 
-	  return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST); } }
-	 
+	/*
+	 * @PostMapping("reserveCan")
+	 * 
+	 * @ApiOperation("ReserveCanApi")
+	 * 
+	 * @ApiResponses(value = { @ApiResponse(code = 200, message =
+	 * "Reserved Success", response = Message.class),
+	 * 
+	 * @ApiResponse(code = 400, message = "Reservation is not done") }) public
+	 * ResponseEntity<Object> reserveCan(@RequestBody ReserveDto reserve) { String
+	 * errorMessage = null; Message message = null; String status = null;
+	 * ReserveDetails result = null; try { result =
+	 * reserveCanService.reserveStock(reserve); status = "Success"; }
+	 * catch(ServiceException e) { errorMessage = e.getMessage(); } if (status !=
+	 * null) { message = new Message(status); return new
+	 * ResponseEntity<>(result,HttpStatus.CREATED); } else { message = new
+	 * Message(errorMessage); return new ResponseEntity<>(message,
+	 * HttpStatus.BAD_REQUEST); } }
+	 */
 
 	@PostMapping("reserveOrderCan")
 	@ApiOperation("ReserveOrderCanApi")
@@ -155,46 +151,42 @@ public class ReserveCanController {
 			return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
 	}
 
-	@GetMapping("viewUserReserveOrders")
-	@ApiOperation(value = "ViewUserReserveOrders API")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "ReservedModifyOrdered Success!!", response = Message.class),
-			@ApiResponse(code = 400, message = "ReservedModifyOrdered Failure") })
-	public ResponseEntity<?> viewUserReserveOrders() {
-		List<ReserveDetails> list = null;
-		String errorMessage = null;
+	/*
+	 * @GetMapping("viewUserReserveOrders")
+	 * 
+	 * @ApiOperation(value = "ViewUserReserveOrders API")
+	 * 
+	 * @ApiResponses(value = {
+	 * 
+	 * @ApiResponse(code = 200, message = "ReservedModifyOrdered Success!!",
+	 * response = Message.class),
+	 * 
+	 * @ApiResponse(code = 400, message = "ReservedModifyOrdered Failure") }) public
+	 * ResponseEntity<?> viewUserReserveOrders(@RequestBody ReserveDto reserve) {
+	 * List<ReserveDetails> list = null; String errorMessage = null;
+	 * 
+	 * try { list = reserveCanService.viewUserReserveOrders(reserve); } catch
+	 * (Exception e) { e.printStackTrace(); errorMessage = e.getMessage(); } if
+	 * (list != null) return new ResponseEntity<>(list, HttpStatus.OK); else return
+	 * new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST); }
+	 */
 
-		try {
-			list = reserveCanService.viewReserveOrders();
-		} catch (Exception e) {
-			e.printStackTrace();
-			errorMessage = e.getMessage();
-		}
-		if (list != null)
-			return new ResponseEntity<>(list, HttpStatus.OK);
-		else
-			return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-	}
-
-	@PostMapping("cancelReserveOrder")
-	@ApiOperation(value = "CancelReserveCan API")
-	@ApiResponses(value = { @ApiResponse(code = 201, message = "Success", response = Message.class),
-			@ApiResponse(code = 400, message = "Invalid", response = Message.class) })
-	public ResponseEntity<?> cancelReserveOrder(@RequestBody ReserveDto reserve) {
-		String errorMessage = null;
-		ReserveDetails reserveCan = null;
-		try {
-			reserveCan = reserveCanService.cancelReserve(reserve);
-		} catch (Exception e) {
-			errorMessage = e.getMessage();
-		}
-		if (reserveCan != null) {
-
-			return new ResponseEntity<>(reserveCan, HttpStatus.OK);
-		} else {
-			errorMessage = "Invalid Reserve ID";
-			Message message = new Message(errorMessage);
-			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-		}
-	}
+	/*
+	 * @PostMapping("cancelReserveOrder")
+	 * 
+	 * @ApiOperation(value = "CancelReserveCan API")
+	 * 
+	 * @ApiResponses(value = { @ApiResponse(code = 201, message = "Success",
+	 * response = Message.class),
+	 * 
+	 * @ApiResponse(code = 400, message = "Invalid", response = Message.class) })
+	 * public ResponseEntity<?> cancelReserveOrder(@RequestBody ReserveDto reserve)
+	 * { String errorMessage = null; ReserveDetails reserveCan = null; try {
+	 * reserveCan = reserveCanService.cancelReserve(reserve); } catch (Exception e)
+	 * { errorMessage = e.getMessage(); } if (reserveCan != null) {
+	 * 
+	 * return new ResponseEntity<>(reserveCan, HttpStatus.OK); } else { errorMessage
+	 * = "Invalid Reserve ID"; Message message = new Message(errorMessage); return
+	 * new ResponseEntity<>(message, HttpStatus.BAD_REQUEST); } }
+	 */
 }
