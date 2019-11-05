@@ -31,16 +31,13 @@ public class ReserveCanController {
 	public ResponseEntity<Object> reserveCan(@RequestBody ReserveDto reserve) {
 		String errorMessage = null;
 		Message message = null;
-		String status = null;
 		ReserveDetails result = null;
 		try {
 			result = reserveCanService.reserveCan(reserve);
-			status = "Success";
 		} catch (ServiceException e) {
 			errorMessage = e.getMessage();
 		}
-		if (status != null) {
-			message = new Message(status);
+		if (result != null) {
 			return new ResponseEntity<>(result, HttpStatus.CREATED);
 		} else {
 			message = new Message(errorMessage);
